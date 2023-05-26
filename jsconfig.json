@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./resources/js",
+        "paths": {
+            "~components/*": [
+                "components/*"
+            ],
+            "~styles/*": [
+                "styles/*"
+            ],
+            "~config/*": [
+                "config/*"
+            ],
+            "~context/*": [
+                "context/*"
+            ],
+            "~helpers/*": [
+                "helpers/*"
+            ],
+            "~hooks/*": [
+                "hooks/*"
+            ],
+            "~layouts/*": [
+                "layouts/*"
+            ],
+            "~pages/*": [
+                "pages/*"
+            ],
+            "~services/*": [
+                "pages/*"
+            ],
+            "~route/*": [
+                "route/*"
+            ]
+        }
+    }
+}
