@@ -1,0 +1,104 @@
+default:
+  image: gryphon/php-yarn:8.1
+cache: &global_cache
+  key:
+    files:
+      - composer.lock
+  paths:
+    - vendor/
+    - node_modules/
+    - public/build/
+  policy: pull-push
+
+stages:
+  - build
+  - test
+  - deploy
+  - deploy-live
+
+dash:build:
+  stage: build
+  tags:
+    - gryphon # run on private runner
+  script:
+    - composer install -q --ignore-platform-reqs --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - npm install
+    - npm run build
+    # Environment
+    - cp .env.testing .env
+    # Generate an application key. Re-cache.
+    - php artisan key:generate
+    - php artisan config:cache
+    # Run database migrations.
+    - php artisan migrate
+    # Passport keys
+    # php artisan passport:keys
+
+dash:test:
+  stage: test
+  needs: ["dash:build"]
+  cache:
+    # inherit all global cache settings
+    <<: *global_cache
+    # override the policy
+    policy: pull
+  tags:
+    - gryphon
+  script:
+    # - cd apps/backend
+    # run laravel tests
+    - php artisan test
+
+dash:deploy:
+  stage: deploy
+  # only for develop branch deploy to staging
+  only:
+    refs:
+      - develop
+  cache:
+    # inherit all global cache settings
+    <<: *global_cache
+    # override the policy
+    policy: pull
+  tags:
+    - gryphon
+  script:
+    # gitlab does not correctly parse certificate from textarea input on their ui, so has to be base64 encoded and decoded
+    - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY_64" | base64 -d)
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # Envoy has been added to the image
+    - vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA"
+  environment:
+    name: staging
+    url: https://dashboard-stage.periscope365.com
+
+dash:deploy-live:
+  stage: deploy-live
+  # only for develop branch deploy to staging
+  only:
+    refs:
+      - main
+  cache:
+    # inherit all global cache settings
+    <<: *global_cache
+    # override the policy
+    policy: pull
+  tags:
+    - gryphon
+  script:
+    # gitlab does not correctly parse certificate from textarea input on their ui, so has to be base64 encoded and decoded
+    - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY_64" | base64 -d)
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # Envoy has been added to the image
+    # - curl -sS https://getcomposer.org/installer | php
+    # - php composer.phar global require laravel/envoy
+    - vendor/bin/envoy run deploy --production=main --commit="$CI_COMMIT_SHA"
+  environment:
+    name: production
+    url: https://dashboard.periscope365.com
