@@ -1,7 +1,7 @@
 @servers(['stage' => 'deployer@ip-172-31-52-225.us-west-2.compute.internal', 'alpha' => 'deployer@ip-172-31-51-115.us-west-2.compute.internal'])
 
 @setup
-    $repository = 'git@gitlab.com:dmecg/rx-function.git';
+    $repository = 'git@gitlab.com:dmecg/dashboard.git';
     $releases_dir = empty($production) ? '/var/www/stage-dashboard/releases' : '/var/www/dashboard/releases';
     $app_dir = empty($production) ? '/var/www/stage-dashboard' : '/var/www/dashboard';
     $target = empty($production) ? 'stage' : 'alpha';
@@ -48,7 +48,7 @@
     #echo 'Linking fonts folder'
     #ln -nfs {{ $app_dir }}/fonts {{ $new_release_dir }}/public/fonts
 
-    
+
     #echo 'Run migrations'
     #cd {{ $new_release_dir }}
     #php artisan migrate --force
