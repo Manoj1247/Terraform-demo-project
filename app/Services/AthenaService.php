@@ -33,11 +33,6 @@ class AthenaService
     public function runQuery(string $query): array
     {
         try {
-            $data = Storage::json('response.json');
-            return [
-                'success' => true,
-                'data' => $data
-            ];
             $result = $this->client->startQueryExecution([
                 'QueryExecutionContext' => [
                     'Database' => config('aws.athena_db_name'),
