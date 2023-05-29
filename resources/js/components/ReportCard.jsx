@@ -11,8 +11,8 @@ const ReportCard = ({data}) => {
     const title = data.displaylabel ?  data.displaylabel: 'No title.';
     return (
         <>
-            <Card>
-                <Card.Img variant="top" src={imageUrl} height="100px" width="auto" />
+            <Card width="300px" height="480px">
+                <Card.Img variant="top" src={imageUrl} width="300px" height="189px" />
                 <Card.Body className="d-flex flex-column">
                     <Card.Title>
                         {data.displaylabel ? (
