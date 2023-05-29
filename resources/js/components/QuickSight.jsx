@@ -12,7 +12,6 @@ function QuickSight({id, onQSDashboardLoaded, loading}) {
 
     const refreshInterval = 600 * 60 * 1000; // After 600 minutes, this will refresh quicksight iframe Url
     React.useEffect(() => {
-        console.log('ididididididid', id)
         fireFetchQSUrlRequest({params: {id}})
             .then(() => {
                 onQSDashboardLoaded(id);

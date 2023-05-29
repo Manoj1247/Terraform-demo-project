@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import {Col, Container, InputGroup, Nav, Row, Form} from "react-bootstrap";
-import QuickSight from "~components/QuickSight";
+import {Col, Container, InputGroup, Row, Form} from "react-bootstrap";
 import useApiCall from "~hooks/useApiCall";
 import {GET} from "~config/url";
 import PageAlert from "~components/PageAlert";
@@ -13,6 +12,7 @@ const Home = () => {
         method: GET,
         url: '/api/reports'
     });
+    const [title, setTitle] = useState('');
     const [reports, setReports] = useState([]);
     React.useEffect(()=>{
         (async()=>{
@@ -20,9 +20,17 @@ const Home = () => {
         })()
     },[]);
     React.useEffect(()=>{
+        if(data.length > 0) {
+            setTitle(data[0].title);
+        }
         setReports(data);
         setKeyword('');
-    },[data])
+    },[data]);
+    React.useEffect(()=>{
+        if(title) {
+            document.title = title;
+        }
+    },[title]);
     React.useEffect(()=>{
         searchByKeyword(keyword)
     },[keyword]);
@@ -53,6 +61,9 @@ const Home = () => {
     return (
         <Container>
             <Row className="mt-5">
+                <Col md={12}>
+                    <h1 className="mt-3 mb-5 text-center">{title}</h1>
+                </Col>
                 <Col md={12} className="d-flex flex-row justify-content-end">
                     <InputGroup className="mb-3">
                         <Form.Control
