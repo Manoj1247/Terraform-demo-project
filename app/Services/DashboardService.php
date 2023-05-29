@@ -26,7 +26,6 @@ class DashboardService
         try {
             $path = 'integrations/SQL_library/embedding_sql/elt_qs_report.sql';
             $query = Storage::disk('s3')->get($path);
-//            $query = '';
             $athenaResult = $this->athenaService->runQuery($query);
             if (!$athenaResult['success']) return $athenaResult;
 
