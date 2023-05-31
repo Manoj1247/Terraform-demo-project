@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-
+use Aws\S3;
 
 class DashboardService
 {
@@ -35,20 +35,16 @@ class DashboardService
             $athenaResult = $this->athenaService->runQuery($query);
             if (!$athenaResult['success']) return $athenaResult;
             $data = $athenaResult['data'];
-            foreach ($data as $dashboard) {
+            $data = array_map(function($dashboard){
                 try {
-                    $screenshotPath = public_path('images/screenshots/'. $dashboard['id'].'_'.$dashboard['ssname']);
-                    if(!file_exists($screenshotPath)) {
-                        $url = config('app.dps_domain').'/gets3object?Clientid='.config('app.dps_api_id').
-                            '&Clientsecret='.config('app.dps_api_secret').
-                            '&S3url=https://periscope365-prod.s3.us-west2.amazonaws.com/documents/requestid/'.$dashboard['id'].'/'.$dashboard['ssname'];
-                        $content = Http::get($url)->body();
-                        file_put_contents($screenshotPath, $content);
-                    }
+                    $dashboard['screenshot'] = Storage::disk('s3')->temporaryUrl('documents/requestid/'.$dashboard['id'].'/'.$dashboard['ssname'], now()->addMinutes(5));
+                    info($dashboard['screenshot']);
                 }catch (\Exception $e){
+                    $dashboard['screenshot'] = null;
                     info('Download Error:::'.$e->getMessage());
                 }
-            }
+                return $dashboard;
+            }, $data);
             return [
                 'success' => true,
                 'data' => $data
