@@ -4,7 +4,7 @@ import ReportModal from "~components/ReportModal";
 
 const ReportCard = ({data}) => {
     const [show, setShow] = React.useState(false);
-    const imageUrl = `/images/screenshots/${data.id}_${data.ssname}`
+    const imageUrl = data['screenshot']
     const reportNumber = data.reportnumber.split('/')[0]
     const title = data.displaylabel ?  data.displaylabel: 'No title.';
 
