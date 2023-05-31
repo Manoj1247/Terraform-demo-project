@@ -20,18 +20,45 @@ header.app-header {
     object-fit: contain;
     width: 100%;
 }
-
-section .row {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 10px 0;
-}
-
 .loader-style {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(100% - 100px);
+    height: calc(100% - 150px);
     width: 100%;
     overflow: hidden;
+    position: absolute;
+    z-index: 10000;
+    background-color: white;
 }
+
+.fadeIn {
+    animation-name: fadeIn;
+    animation-duration: 1500ms;
+}
+.fadeOut {
+    animation-name: fadeOut;
+    animation-duration: 1500ms;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
