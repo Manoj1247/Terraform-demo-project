@@ -5,10 +5,8 @@ namespace App\Services;
 use Aws\QuickSight\Exception\QuickSightException;
 use Aws\QuickSight\QuickSightClient;
 use Exception;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Aws\S3;
 
 class DashboardService
 {
@@ -38,7 +36,6 @@ class DashboardService
             $data = array_map(function($dashboard){
                 try {
                     $dashboard['screenshot'] = Storage::disk('s3')->temporaryUrl('documents/requestid/'.$dashboard['id'].'/'.$dashboard['ssname'], now()->addMinutes(5));
-                    info($dashboard['screenshot']);
                 }catch (\Exception $e){
                     $dashboard['screenshot'] = null;
                     info('Download Error:::'.$e->getMessage());
