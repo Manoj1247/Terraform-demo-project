@@ -4,15 +4,19 @@ import ReportModal from "~components/ReportModal";
 
 const ReportCard = ({data}) => {
     const [show, setShow] = React.useState(false);
-    const clientId = 1;
-    const clientSecret = 'XkAL6qpimHM9mYZhBEfPDAdYMU22VsoNDB6wPQ94';
-    const imageUrl = `https://dps.periscope365.com/gets3object?Clientid=${clientId}&Clientsecret=${clientSecret}&S3url=https://periscope365-prod.s3.us-west2.amazonaws.com/documents/requestid/${data.id}/${data.ssname}`
+    const imageUrl = `/images/screenshots/${data.id}_${data.ssname}`
     const reportNumber = data.reportnumber.split('/')[0]
     const title = data.displaylabel ?  data.displaylabel: 'No title.';
+
     return (
         <>
             <Card width="300px" height="480px">
-                <Card.Img variant="top" src={imageUrl} width="300px" height="189px" />
+                <Card.Img
+                    variant="top"
+                    src={imageUrl}
+                    width="300px"
+                    height="189px"
+                />
                 <Card.Body className="d-flex flex-column">
                     <Card.Title>
                         {data.displaylabel ? (

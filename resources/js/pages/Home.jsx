@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {Col, Container, InputGroup, Row, Form} from "react-bootstrap";
+import React, {useEffect, useState} from 'react'
+import {Col, Container, InputGroup, Row, Form, Button} from "react-bootstrap";
 import useApiCall from "~hooks/useApiCall";
 import {GET} from "~config/url";
 import PageAlert from "~components/PageAlert";
@@ -8,7 +8,8 @@ import ReportCard from "~components/ReportCard";
 
 const Home = () => {
     const [keyword, setKeyword] = useState('');
-    const [{error: reportsError, loading: reportsLoading, data}, fireFetchReportsRequest] = useApiCall({
+    const [loading, setLoading] = useState(true);
+    const [{error: reportsError, loading: reportsLoading =  true, data}, fireFetchReportsRequest] = useApiCall({
         method: GET,
         url: '/api/reports'
     });
@@ -49,7 +50,17 @@ const Home = () => {
             setReports(data);
         }
     }
-    if(reportsLoading) return <Loader />
+    useEffect(()=>{
+        if(!reportsLoading && data.length > 0) {
+            document.getElementsByClassName('loader-style').item(0)?.classList.add('fadeOut');
+            document.getElementsByClassName('container').item(0)?.classList.add('fadeIn');
+            setTimeout(()=>{
+                document.getElementsByClassName('loader-style').item(0).style.display = 'none';
+            },1500);
+            document.getElementsByClassName('container').item(0).style.display = 'block';
+        }
+    },[reportsLoading]);
+    // if(loading) return <Loader />
 
     if (reportsError) {
         return (
@@ -59,32 +70,36 @@ const Home = () => {
         )
     }
     return (
-        <Container>
-            <Row className="mt-5">
-                <Col md={12}>
-                    <h1 className="mt-3 mb-5 text-center">{title}</h1>
-                </Col>
-                <Col md={12} className="d-flex flex-row justify-content-end">
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            placeholder="Search by title or description..."
-                            aria-label="Search"
-                            aria-describedby="basic-addon"
-                            value={keyword}
-                            onChange={(e)=>setKeyword(e.target.value)}
-                        />
-                        <InputGroup.Text id="basic-addon">Search</InputGroup.Text>
-                    </InputGroup>
-                </Col>
-                {Array.isArray(reports) && (
-                    reports.map((report, key)=>(
-                        <Col lg={4} sm={6} xs={12} key={key} className="mt-3">
-                            <ReportCard data={report} />
-                        </Col>
-                    ))
-                )}
-            </Row>
-        </Container>
+        <>
+            <Loader />
+            <Container>
+                <Row className="mt-5 mb-5">
+                    <Col md={12}>
+                        <h1 className="mt-3 mb-5 text-center">{title}</h1>
+                    </Col>
+                    <Col md={12} className="d-flex flex-row justify-content-end">
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text id="basic-addon">Search</InputGroup.Text>
+                            <Form.Control
+                                placeholder="Search by title or description..."
+                                aria-label="Search"
+                                aria-describedby="basic-addon"
+                                value={keyword}
+                                onChange={(e)=>setKeyword(e.target.value)}
+                            />
+                            <Button style={{zIndex: 1}} variant="danger" onClick={()=>setKeyword('')}>Clear</Button>
+                        </InputGroup>
+                    </Col>
+                    {Array.isArray(reports) && (
+                        reports.map((report, key)=>(
+                            <Col lg={3} sm={6} xs={12} key={key} className="mt-3">
+                                <ReportCard data={report} />
+                            </Col>
+                        ))
+                    )}
+                </Row>
+            </Container>
+        </>
     )
 }
 export default Home

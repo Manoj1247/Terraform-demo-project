@@ -211,4 +211,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+
+    'dps_api_secret' => env('DPS_KEY_SECRET'),
+    'dps_api_id' => env('DPS_KEY_ID'),
+    'dps_domain' => env('DPS_DOMAIN'),
 ];
