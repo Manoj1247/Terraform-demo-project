@@ -49,9 +49,9 @@
     #ln -nfs {{ $app_dir }}/fonts {{ $new_release_dir }}/public/fonts
 
 
-    #echo 'Run migrations'
-    #cd {{ $new_release_dir }}
-    #php artisan migrate --force
+    echo 'Run migrations'
+    cd {{ $new_release_dir }}
+    php artisan migrate --force
 
     # echo 'Update API docs'
     # php artisan l5-swagger:generate

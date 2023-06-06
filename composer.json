@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "auth0/login": "7.5.2",
         "aws/aws-sdk-php": "^3.269",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
