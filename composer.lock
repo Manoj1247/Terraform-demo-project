@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66118428bf38a2ee975c09c916e19b26",
+    "content-hash": "9c8a92f7f8b7ec363891856d68643985",
     "packages": [
         {
             "name": "auth0/auth0-php",
@@ -105,16 +105,16 @@
         },
         {
             "name": "auth0/login",
-            "version": "7.5.0",
+            "version": "7.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auth0/laravel-auth0.git",
-                "reference": "2e5d72dda6dd414b085f5712f095871cc7c6b0ab"
+                "reference": "5863d5c1478a335247895c282a9790da39c6bbf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auth0/laravel-auth0/zipball/2e5d72dda6dd414b085f5712f095871cc7c6b0ab",
-                "reference": "2e5d72dda6dd414b085f5712f095871cc7c6b0ab",
+                "url": "https://api.github.com/repos/auth0/laravel-auth0/zipball/5863d5c1478a335247895c282a9790da39c6bbf4",
+                "reference": "5863d5c1478a335247895c282a9790da39c6bbf4",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
                 "issues": "https://github.com/auth0/laravel-auth0/issues",
                 "source": "https://github.com/auth0/laravel-auth0"
             },
-            "time": "2023-04-03T13:50:11+00:00"
+            "time": "2023-04-10T17:03:49+00:00"
         },
         {
             "name": "aws/aws-crt-php",
