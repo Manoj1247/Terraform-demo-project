@@ -42,7 +42,7 @@ const ReportCard = ({data}) => {
                                 ) : (
                                     <small className="text-danger">No description.</small>
                                 )
-                            ): <small className="text-danger">Dashboard Doesn't exist.</small>
+                            ): <small className="text-danger">Dashboard doesn't exist or invalid.</small>
                         }
                     </Card.Text>
                     <Button variant="primary" className="mt-auto" onClick={() => setShow(true)} disabled={!dashboardId}>View</Button>
