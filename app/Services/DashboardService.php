@@ -81,7 +81,8 @@ class DashboardService
             return [
                 'success' => true,
                 'data' => [
-                    'url' => $result['EmbedUrl']
+                    'url' => $result['EmbedUrl'],
+                    'request_id' => $result['RequestId']
                 ]
             ];
         } catch (QuickSightException $e) {

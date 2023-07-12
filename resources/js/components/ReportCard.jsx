@@ -25,6 +25,9 @@ const ReportCard = ({data}) => {
                     src={imageUrl}
                     width="300px"
                     height="189px"
+                    onClick={() => dashboardId ? setShow(true): null}
+                    style={{cursor: 'pointer'}}
+
                 />
                 <Card.Body className="d-flex flex-column">
                     <Card.Title>
