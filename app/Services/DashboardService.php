@@ -28,7 +28,7 @@ class DashboardService
 //                'success' =>  true,
 //                'data' => $data
 //            ];
-            $path = 'integrations/SQL_library/embedding_sql/bcp_dashboards.sql';
+            $path = 'integrations/SQL_library/embedding_sql/elt_qs_report.sql';
             $query = Storage::disk('s3')->get($path);
             $athenaResult = $this->athenaService->runQuery($query);
             if (!$athenaResult['success']) return $athenaResult;
