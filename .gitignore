@@ -1,0 +1,3 @@
+**/*.bak
+**/terraform.tfstate*
+**/.terraform.lock.hcl
