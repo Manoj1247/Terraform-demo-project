@@ -20,13 +20,19 @@ variable "create_internet_gateway_attachment" {
   default     = true
 }
 
+variable "vpc_cidr_block" {
+  description = "CIDR block for VPC and Subnet"
+  type = string
+  default = "10.0.0.0/16"
+}
+
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
 }
 
 resource "aws_vpc" "main" {
-  cidr_block       = "10.0.0.0/16"
+  cidr_block       = var.vpc_cidr_block
   instance_tenancy = "default"
 
   tags = {
@@ -40,7 +46,7 @@ resource aws_internet_gateway "main"{
 
 resource "aws_subnet" "main_subnet" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"  
+  cidr_block              = var.vpc_cidr_block
   availability_zone       = "us-east-1a"    
 
   tags = {
