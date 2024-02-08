@@ -1,0 +1,6 @@
+**/*.bak
+**/terraform.tfstate*
+**/.terraform.lock.hcl
+.terraform
+.devcontainer
+
