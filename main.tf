@@ -33,7 +33,11 @@ provider "aws" {
 
 
 module "network" {
-  source         = "./modules/network"
+  source         = "git@github.com:Manoj1247/terraform-modules-network.git"
   vpc_cidr_block = var.vpc_cidr_block
+}
+
+output "vpc_id" {
+  value = module.network.vpc_id
 }
 
