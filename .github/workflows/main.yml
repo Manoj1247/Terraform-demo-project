@@ -5,22 +5,22 @@ on:
 
 jobs:
   terraform:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
-  - name: checkout code
-    uses: actions/checkout@v2
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v2
   
-  - name: setup terraform
-    uses: hashicorp/setup-terraform@v1
-    with:
-      terraform_version: 1.7.3
-  
-  - name: check format
-    run: terraform fmt -recursive
+    - name: setup terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.7.3
+    
+    - name: check format
+      run: terraform fmt -recursive
 
-  - name: initialize terraform
-    run : terraform init && terraform plan && terraform validate 
+    - name: initialize terraform
+      run : terraform init && terraform plan && terraform validate 
 
   
 
