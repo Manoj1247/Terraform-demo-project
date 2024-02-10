@@ -23,13 +23,9 @@ jobs:
       run: terraform fmt -recursive -check
 
     - name: initialize terraform
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
       run : |
-        echo credentials \"github.com\" { >> ~/.terraformrc
-        echo    token = \"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\" >> ~/.terraformrc
-        echo } >> ~/.terraformrc
-        cat ~/.terraformrc
-        #sed -i -e "s/github.com/https:\/\/git:${{ vars.PAT_VAR }}@github.com/g" main.tf
-        #cat main.tf
         terraform init
         terraform plan
         terraform validate 
