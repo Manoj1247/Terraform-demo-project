@@ -24,12 +24,12 @@ jobs:
 
     - name: initialize terraform
       run : |
-        echo credentials "github.com" = { >> ~/.terraformrc
+        echo credentials "github.com" { >> ~/.terraformrc
         echo    token = "${{ secrets.PAT }}" >> ~/.terraformrc
         echo } >> ~/.terraformrc
         cat ~/.terraformrc
-        sed -i -e "s/github.com/https:\/\/git:${{ secrets.PAT }}@github.com/g" main.tf
-        cat main.tf
+        #sed -i -e "s/github.com/https:\/\/git:${{ secrets.PAT }}@github.com/g" main.tf
+        #cat main.tf
         terraform init
         terraform plan
         terraform validate 
