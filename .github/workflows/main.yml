@@ -23,7 +23,7 @@ jobs:
 
     - name: initialize terraform
       run : |
-        export TF_TOKEN_github_com={{ secrets.PAT }}
+        export TF_TOKEN_github_com=${{ secrets.PAT }}
         terraform init
         terraform plan
         terraform validate 
