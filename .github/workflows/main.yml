@@ -24,6 +24,8 @@ jobs:
     - name: initialize terraform
       run : |
         export TF_TOKEN_github_com=${{ secrets.PAT }}
+        sed -i -e "s/git@github.com:/https:\/\/git@github.com\//g" main.tf
+        cat main.tf
         terraform init
         terraform plan
         terraform validate 
