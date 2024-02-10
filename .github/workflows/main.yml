@@ -1,28 +1,23 @@
 name : Terraform Checks
 on:
   push:
-    branches: [main]
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Display SSH key
-      run: echo "${{ secrets.SSH_PRIVATE_KEY }}"
-
     - name: checkout code
-      uses: actions/checkout@v2
-      with: 
-        ssh-key : ${{ secrets.SSH_PRIVATE_KEY }}
+      uses: actions/checkout@v4
   
     - name: setup terraform
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.7.3
+        terraform_wrapper: false
     
     - name: check format
-      run: terraform fmt -recursive
+      run: terraform fmt -recursive -check
 
     - name: initialize terraform
       run : terraform init && terraform plan && terraform validate 
