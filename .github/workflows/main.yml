@@ -2,6 +2,8 @@ name : Terraform Checks
 on:
   push:
 
+permissions: read-all
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -20,7 +22,11 @@ jobs:
       run: terraform fmt -recursive -check
 
     - name: initialize terraform
-      run : terraform init && terraform plan && terraform validate 
+      run : |
+        export TF_TOKEN_github_com={{ secrets.PAT }}
+        terraform init
+        terraform plan
+        terraform validate 
 
   
 
