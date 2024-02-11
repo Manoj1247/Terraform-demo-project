@@ -23,8 +23,13 @@ jobs:
         repo: Manoj1247/terraform-modules-network
         token: ${{secrets.PAT}}
         path: .terraform/modules/network
-     
-  
+
+    - name: checkout database repo
+      uses: actions/checkout@v4
+      with: 
+        repo: Manoj1247/terraform-modules-database
+        path: .terraform/modules/database
+
     - name: setup terraform
       uses: hashicorp/setup-terraform@v1
       with:
