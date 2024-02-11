@@ -10,6 +10,10 @@ jobs:
     permissions: read-all
 
     steps:
+    - uses: de-vri-es/setup-git-credentials@v2
+      with:
+        credentials: ${{secrets.GIT_CREDENTIALS}}
+    
     - name: checkout code
       uses: actions/checkout@v4
   
@@ -23,14 +27,12 @@ jobs:
       run: terraform fmt -recursive -check
 
     - name: initialize terraform
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
+      #env:
+       # GITHUB_TOKEN: ${{ secrets.PAT }}
       run : |
-        git config --global user.name "git"
-        echo credentials \"github.com\" { token = \"${{ secrets.PAT }}\" } > ~/.terraformrc
-        terraform init
-        terraform plan
-        terraform validate 
+              terraform init
+              terraform plan
+              terraform validate 
 
   
 
