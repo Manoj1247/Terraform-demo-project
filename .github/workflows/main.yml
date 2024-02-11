@@ -20,13 +20,13 @@ jobs:
     - name: checkout other repo
       uses: actions/checkout@v4
       with: 
-        repo: Manoj1247/terraform-modules-network
+        repository: Manoj1247/terraform-modules-network
         path: modules/network
 
     - name: checkout database repo
       uses: actions/checkout@v4
       with: 
-        repo: Manoj1247/terraform-modules-database
+        repository: Manoj1247/terraform-modules-database
         path: modules/database
 
     - name: setup terraform
@@ -40,6 +40,7 @@ jobs:
 
     - name: initialize terraform
       run : |
+        ls -ltra .
         sed -i -e "s/github\.com\/Manoj1247\/terraform\-modules\-/\.\/modules\//g" main.tf
         sed -i -e "s/\.git//g" main.tf
         cat main.tf
