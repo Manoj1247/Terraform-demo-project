@@ -38,17 +38,9 @@ jobs:
       #env:
        # GITHUB_TOKEN: ${{ secrets.PAT }}
       run : |
-<<<<<<< HEAD
-        git config --global user.name "git"
-    #    echo credentials \"github.com\" { token = \"${{ secrets.PAT }}\" } > ~/.terraformrc
-        terraform init
-        terraform plan
-        terraform validate 
-=======
               terraform init
               terraform plan
               terraform validate 
->>>>>>> 7c0a83cb8989971e2b111a3c2427cba1cfcd72d9
 
   
 
