@@ -22,7 +22,7 @@ jobs:
       with: 
         repo: Manoj1247/terraform-modules-network
         token: ${{secrets.PAT}}
-        path: .terraform/modules
+        path: .terraform/modules/network
      
   
     - name: setup terraform
