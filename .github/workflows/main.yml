@@ -43,6 +43,7 @@ jobs:
     - name: initialize terraform
       run : |
         ls -ltra .
+        find ./modules
         sed -i -e "s/github\.com\/Manoj1247\/terraform\-modules\-/\.\/modules\//g" main.tf
         sed -i -e "s/\.git//g" main.tf
         cat main.tf
