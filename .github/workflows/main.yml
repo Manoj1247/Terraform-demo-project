@@ -21,13 +21,13 @@ jobs:
       uses: actions/checkout@v4
       with: 
         repo: Manoj1247/terraform-modules-network
-        path: .terraform/modules/network
+        path: modules/network
 
     - name: checkout database repo
       uses: actions/checkout@v4
       with: 
         repo: Manoj1247/terraform-modules-database
-        path: .terraform/modules/database
+        path: modules/database
 
     - name: setup terraform
       uses: hashicorp/setup-terraform@v1
@@ -40,7 +40,7 @@ jobs:
 
     - name: initialize terraform
       run : |
-        sed -i -e "s/github\.com\/Manoj1247\/terraform\-modules\-/\.terraform\/modules\//g" main.tf
+        sed -i -e "s/github\.com\/Manoj1247\/terraform\-modules\-/\.\/modules\//g" main.tf
         sed -i -e "s/\.git//g" main.tf
         cat main.tf
         terraform init
