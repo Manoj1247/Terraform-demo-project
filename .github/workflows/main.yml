@@ -21,7 +21,6 @@ jobs:
       uses: actions/checkout@v4
       with: 
         repo: Manoj1247/terraform-modules-network
-        token: ${{secrets.PAT}}
         path: .terraform/modules/network
 
     - name: checkout database repo
@@ -40,12 +39,13 @@ jobs:
       run: terraform fmt -recursive -check
 
     - name: initialize terraform
-      #env:
-       # GITHUB_TOKEN: ${{ secrets.PAT }}
       run : |
-              terraform init
-              terraform plan
-              terraform validate 
+        sed -i -e "s/github\.com\/Manoj1247\/terraform\-modules\-/\.terraform\/modules\//g" main.tf
+        sed -i -e "s/\.git//g" main.tf
+        cat main.tf
+        terraform init
+        terraform plan
+        terraform validate 
 
   
 
