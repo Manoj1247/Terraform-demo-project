@@ -16,6 +16,12 @@ jobs:
     
     - name: checkout code
       uses: actions/checkout@v4
+    - name: checkout other repo
+      uses: actions/checkout@v4
+      with: 
+        repo: Manoj1247/terraform-modules-network
+        token: ${{secrets.PAT}}
+     
   
     - name: setup terraform
       uses: hashicorp/setup-terraform@v1
