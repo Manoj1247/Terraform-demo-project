@@ -16,14 +16,17 @@ class AthenaService
     )
     {
         if (!$this->client) {
-            $this->client = new AthenaClient([
+            $settings = [
                 'version' => 'latest',
                 'region' => config('aws.default_region'),
-                'credentials' => [
-                    'key' => config('aws.access_key_id'),
+            ];
+            if (null !== ($accessKey = config('aws.access_key_id')) && !empty($accessKey)) {
+                $settings['credentials'] = [
+                    'key' => $accessKey,
                     'secret' => config('aws.secret_access_key'),
-                ],
-            ]);
+                ];
+            }
+            $this->client = new AthenaClient($settings);
         }
     }
     /**

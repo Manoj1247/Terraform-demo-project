@@ -60,14 +60,17 @@ class DashboardService
     public function getEmbedUrl(string $dashboardId): array
     {
         try {
-            $client = new QuickSightClient([
+            $settings = [
                 'version' => 'latest',
                 'region' => config('services.aws.region'),
-                'credentials' => [
-                    'key' => config('services.aws.qs_access_key_id'),
+            ];
+            if (null !== ($accessKey = config('services.aws.qs_access_key_id')) && !empty($accessKey)) {
+                $settings['credentials'] = [
+                    'key' => $accessKey,
                     'secret' => config('services.aws.qs_secret_access_key'),
-                ],
-            ]);
+                ];
+            }
+            $client = new QuickSightClient($settings);
             $identityType = 'IAM';
             $params = [
                 'AwsAccountId' => config('services.aws.account_id'),
