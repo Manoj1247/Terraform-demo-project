@@ -2,7 +2,7 @@ locals {
   ecr_repo_name                = "my-first-repo"
   my_app_cluster_name          = "my-app-cluster"
   my_app_task_famliy           = "my-app-task"
-  container_port               = 3000
+  container_port               =  80
   my_app_task_name             = "my-app-task"
   ecs_task_execution_role_name = "my-app-task-execution-role"
 

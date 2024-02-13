@@ -4,15 +4,16 @@ module "network" {
 }
 
 module "database" {
-  source      = "git@github.com:Manoj1247/terraform-modules-database.git?ref=0.0.2"
+  source      = "git@github.com:Manoj1247/terraform-modules-database.git?ref=0.0.3"
   subnet_a_id = module.network.subnet_a_id
   subnet_b_id = module.network.subnet_b_id
 }
 
 module "ecr" {
-  source = "git@github.com:Manoj1247/terraform-modules-ecr.git"
-  ecr_repo_name   = local.ecr_repo_name
+  source        = "git@github.com:Manoj1247/terraform-modules-ecr.git"
+  ecr_repo_name = local.ecr_repo_name
 }
+
 module "ecs" {
   source                         = "git@github.com:Manoj1247/terraform-modules-ecs.git"
   my_app_cluster_name            = local.my_app_cluster_name
@@ -25,8 +26,8 @@ module "ecs" {
   my_app_service_name            = local.my_app_service_name
   subnet_a_id                    = module.network.subnet_a_id
   subnet_b_id                    = module.network.subnet_b_id
-  ecr_repo_url                   = module.ecr.ecr_repo_url
-  vpc_id  = module.network.vpc_id
+  ecr_repository_url             = module.ecr.ecr_repo_url
+  vpc_id                         = module.network.vpc_id
 }
 output "vpc_id" {
   value = module.network.vpc_id
