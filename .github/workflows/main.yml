@@ -46,7 +46,6 @@ jobs:
         sed -i -e "s/git@github\.com:Manoj1247\/terraform\-modules\-/\.\/modules\//g" main.tf
         sed -i -e "s/\.git.*/\"/g" main.tf
         rm backend.tf
-        cat main.tf
         terraform init
         terraform validate 
 
