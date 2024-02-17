@@ -4,3 +4,4 @@ docker ps -a <br>
 docker images <br>
 docker tag my-first-image user-name/my-first-repo:latest <br>
 docker push user-name/my-first-repo:latest <br>
+ansible-playbook -i inventory playbook.yml
