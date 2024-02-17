@@ -36,9 +36,32 @@ module "ecs" {
 #creating rdsa keys 
 
 resource "aws_iam_user" "iam_users" {
- count = length(local.users)
- name  = local.users[count.index]
+for_each = {for user in local.users: user=>user}
+name = each.key
 }
+resource "aws_iam_user" "iam_users_map" {
+for_each = {for user, details in local.users_map: user=>details}
+name = each.key
+}
+
+resource "aws_iam_user_policy" "user_policies" {
+  for_each = { for user, details in local.users_map : user => details }
+
+  name = each.key
+  user = aws_iam_user.iam_users_map[each.key].name
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      for policy_arn in each.value.attach_policy_arns : {
+        Effect   = "Allow",
+        Action   = "*",
+        Resource = policy_arn,
+      }
+    ],
+  })
+}
+
 resource "tls_private_key" "example" {
   algorithm = local.algorithm
   rsa_bits  = local.rsa_bits
