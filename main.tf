@@ -40,26 +40,21 @@ for_each = {for user in local.users: user=>user}
 name = each.key
 }
 resource "aws_iam_user" "iam_users_map" {
-for_each = {for user, details in local.users_map: user=>details}
+for_each = local.users_map
 name = each.key
 }
 
-resource "aws_iam_user_policy" "user_policies" {
-  for_each = { for user, details in local.users_map : user => details }
-
-  name = each.key
-  user = aws_iam_user.iam_users_map[each.key].name
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      for policy_arn in each.value.attach_policy_arns : {
-        Effect   = "Allow",
-        Action   = "*",
-        Resource = policy_arn,
-      }
-    ],
-  })
+resource "aws_iam_user_policy_attachment" "users_map_attach" {
+  for_each = merge({}, flatten([for user, details in local.users_map: [
+    for user_policy_arn in details.attach_policy_arns: {
+      "${user}-${split("/", user_policy_arn)[length(split("/", user_policy_arn))-1]}" = {
+      "user" = user
+      "policy_arn" = user_policy_arn
+    }}]
+  ])...
+  )
+  user = aws_iam_user.iam_users_map[each.value.user].name
+  policy_arn = each.value.policy_arn
 }
 
 resource "tls_private_key" "example" {
