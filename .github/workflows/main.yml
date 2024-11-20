@@ -1,7 +1,8 @@
 name : Terraform Checks
 on:
   push:
-
+  merge_group:
+  
 permissions: read-all
 
 jobs:
